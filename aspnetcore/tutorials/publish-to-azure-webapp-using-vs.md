@@ -3,18 +3,23 @@ title: Publish an ASP.NET Core app to Azure with Visual Studio
 author: rick-anderson
 description: Learn how to publish an ASP.NET Core app to Azure App Service using Visual Studio.
 ms.author: riande
-ms.date: 12/16/2017
+ms.custom: mvc
+ms.date: 07/10/2019
 uid: tutorials/publish-to-azure-webapp-using-vs
 ---
 # Publish an ASP.NET Core app to Azure with Visual Studio
 
-By [Rick Anderson](https://twitter.com/RickAndMSFT), [Cesar Blum Silveira](https://github.com/cesarbs), and [Rachel Appel](https://twitter.com/rachelappel)
+By [Rick Anderson](https://twitter.com/RickAndMSFT)
+::: moniker range=">= aspnetcore-3.0"
 
 [!INCLUDE [Azure App Service Preview Notice](../includes/azure-apps-preview-notice.md)]
 
-See [Publish to Azure from Visual Studio for Mac](https://blog.xamarin.com/publish-azure-visual-studio-mac/) if you are working on macOS.
+::: moniker-end
 
-To troubleshoot an App Service deployment issue, see [Troubleshoot ASP.NET Core on Azure App Service](xref:host-and-deploy/azure-apps/troubleshoot).
+
+See [Publish a Web app to Azure App Service using Visual Studio for Mac](https://docs.microsoft.com/visualstudio/mac/publish-app-svc?view=vsmac-2019) if you are working on macOS.
+
+To troubleshoot an App Service deployment issue, see <xref:test/troubleshoot-azure-iis>.
 
 ## Set up
 
@@ -120,7 +125,7 @@ Visual Studio returns to the **Create App Service** dialog.
 
 ![Configure SQL Database dialog](publish-to-azure-webapp-using-vs/_static/conf_final.png)
 
-Visual Studio creates the Web app and SQL Server on Azure. This step can take a few minutes. For information on the resources created, see [Additonal resources](#additonal-resources).
+Visual Studio creates the Web app and SQL Server on Azure. This step can take a few minutes. For information on the resources created, see [Additional resources](#additional-resources).
 
 When deployment completes, select **Settings**:
 
@@ -128,14 +133,14 @@ When deployment completes, select **Settings**:
 
 On the **Settings** page of the **Publish** dialog:
 
-  * Expand **Databases** and check **Use this connection string at runtime**.
-  * Expand **Entity Framework Migrations** and check **Apply this migration on publish**.
+* Expand **Databases** and check **Use this connection string at runtime**.
+* Expand **Entity Framework Migrations** and check **Apply this migration on publish**.
 
 * Select **Save**. Visual Studio returns to the **Publish** dialog. 
 
 ![Publish dialog: Settings panel](publish-to-azure-webapp-using-vs/_static/pubs.png)
 
-Click **Publish**. Visual Studio publishs your app to Azure. When the deployment completes, the app is opened in a browser.
+Click **Publish**. Visual Studio publishes your app to Azure. When the deployment completes, the app is opened in a browser.
 
 ### Test your app in Azure
 
@@ -148,6 +153,7 @@ Click **Publish**. Visual Studio publishs your app to Azure. When the deployment
 ### Update the app
 
 * Edit the *Pages/About.cshtml* Razor page and change its contents. For example, you can modify the paragraph to say "Hello ASP.NET Core!":
+
     [!code-html[About](publish-to-azure-webapp-using-vs/sample/about.cshtml?highlight=9&range=1-9)]
 
 * Right-click on the project and select **Publish...** again.
@@ -174,11 +180,13 @@ When you have finished testing the app, go to the [Azure portal](https://portal.
 
 ### Next steps
 
-* [Continuous Deployment to Azure with Visual Studio and Git](xref:host-and-deploy/azure-apps/azure-continuous-deployment)
+* <xref:host-and-deploy/azure-apps/azure-continuous-deployment>
 
-## Additonal resources
+## Additional resources
 
-* [Azure App Service](https://docs.microsoft.com/azure/app-service/app-service-web-overview)
-* [Azure resource groups](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-overview#resource-groups)
-* [Azure SQL Database](https://docs.microsoft.com/azure/sql-database/)
-* [Troubleshoot ASP.NET Core on Azure App Service](xref:host-and-deploy/azure-apps/troubleshoot)
+* For Visual Studio Code, see [Publish profiles](xref:host-and-deploy/visual-studio-publish-profiles#publish-profiles).
+* [Azure App Service](/azure/app-service/app-service-web-overview)
+* [Azure resource groups](/azure/azure-resource-manager/resource-group-overview#resource-groups)
+* [Azure SQL Database](/azure/sql-database/)
+* <xref:host-and-deploy/visual-studio-publish-profiles>
+* <xref:test/troubleshoot-azure-iis>

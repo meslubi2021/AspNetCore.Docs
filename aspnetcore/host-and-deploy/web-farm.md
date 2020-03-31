@@ -1,15 +1,16 @@
 ---
 title: Host ASP.NET Core in a web farm
-author: guardrex
+author: rick-anderson
 description: Learn how to host multiple instances of an ASP.NET Core app with shared resources in a web farm environment.
+monikerRange: '>= aspnetcore-2.1'
 ms.author: riande
 ms.custom: mvc
-ms.date: 07/16/2018
+ms.date: 01/13/2020
 uid: host-and-deploy/web-farm
 ---
 # Host ASP.NET Core in a web farm
 
-By [Luke Latham](https://github.com/guardrex) and [Chris Ross](https://github.com/Tratcher)
+By [Chris Ross](https://github.com/Tratcher)
 
 A *web farm* is a group of two or more web servers (or *nodes*) that host multiple instances of an app. When requests from users arrive to a web farm, a *load balancer* distributes the requests to the web farm's nodes. Web farms improve:
 
@@ -55,17 +56,19 @@ The following scenarios don't require additional configuration, but they depend 
 | -------- | ------------------- |
 | Authentication | Data Protection (see <xref:security/data-protection/configuration/overview>).<br><br>For more information, see <xref:security/authentication/cookie> and <xref:security/cookie-sharing>. |
 | Identity | Authentication and database configuration.<br><br>For more information, see <xref:security/authentication/identity>. |
-| Session | Data Protection (encrypted cookies) (see <xref:security/data-protection/configuration/overview>) and Caching (see <xref:performance/caching/distributed>).<br><br>For more information, see [Session and app state: Session state](xref:fundamentals/app-state#session-state). |
-| TempData | Data Protection (encrypted cookies) (see <xref:security/data-protection/configuration/overview>) or Session (see [Session and app state: Session state](xref:fundamentals/app-state#session-state)).<br><br>For more information, see [Session and app state: TempData](xref:fundamentals/app-state#tempdata). |
+| Session | Data Protection (encrypted cookies) (see <xref:security/data-protection/configuration/overview>) and Caching (see <xref:performance/caching/distributed>).<br><br>For more information, see [Session and state management: Session state](xref:fundamentals/app-state#session-state). |
+| TempData | Data Protection (encrypted cookies) (see <xref:security/data-protection/configuration/overview>) or Session (see [Session and state management: Session state](xref:fundamentals/app-state#session-state)).<br><br>For more information, see [Session and state management: TempData](xref:fundamentals/app-state#tempdata). |
 | Anti-forgery | Data Protection (see <xref:security/data-protection/configuration/overview>).<br><br>For more information, see <xref:security/anti-request-forgery>. |
 
 ## Troubleshoot
 
-When Data Protection or Caching isn't configured for a web farm environment, intermittent errors occur when requests are processed. This occurs because nodes don't share the same resources and user requests aren't always routed back to the same node.
+### Data Protection and caching
+
+When Data Protection or caching isn't configured for a web farm environment, intermittent errors occur when requests are processed. This occurs because nodes don't share the same resources and user requests aren't always routed back to the same node.
 
 Consider a user who signs into the app using cookie authentication. The user signs into the app on one web farm node. If their next request arrives at the same node where they signed in, the app is able to decrypt the authentication cookie and allows access to the app's resource. If their next request arrives at a different node, the app can't decrypt the authentication cookie from the node where the user signed in, and authorization for the requested resource fails.
 
-When any of the following symptoms occur **intermittently**, the problem is usually traced to improper Data Protection or Caching configuration for a web farm environment:
+When any of the following symptoms occur **intermittently**, the problem is usually traced to improper Data Protection or caching configuration for a web farm environment:
 
 * Authentication breaks &ndash; The authentication cookie is misconfigured or can't be decrypted. OAuth (Facebook, Microsoft, Twitter) or OpenIdConnect logins fail with the error "Correlation failed."
 * Authorization breaks &ndash; Identity is lost.
@@ -74,4 +77,14 @@ When any of the following symptoms occur **intermittently**, the problem is usua
 * TempData fails.
 * POSTs fail &ndash; The anti-forgery check fails.
 
-For more information on Data Protection configuration for web farm deployments, see <xref:security/data-protection/configuration/overview>. For more information on Caching configuration for web farm deployments, see <xref:performance/caching/distributed>.
+For more information on Data Protection configuration for web farm deployments, see <xref:security/data-protection/configuration/overview>. For more information on caching configuration for web farm deployments, see <xref:performance/caching/distributed>.
+
+## Obtain data from apps
+
+If the web farm apps are capable of responding to requests, obtain request, connection, and additional data from the apps using terminal inline middleware. For more information and sample code, see <xref:test/troubleshoot#obtain-data-from-an-app>.
+
+## Additional resources
+
+* [Custom Script Extension for Windows](/azure/virtual-machines/extensions/custom-script-windows) &ndash; Downloads and executes scripts on Azure virtual machines, which is useful for post-deployment configuration and software installation.
+* <xref:host-and-deploy/proxy-load-balancer>
+ 
